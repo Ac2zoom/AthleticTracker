@@ -1,8 +1,10 @@
 <html>
 <head>
     <title>Athletic Tracker</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="stopwatch.js"></script>
     <script src="Athlete.js"></script>
+	<link rel="stylesheet" href="index.css">
 </head>
 
 <body onLoad="display()">
@@ -12,9 +14,10 @@
         <INPUT TYPE="text" id="time">
         <INPUT TYPE="BUTTON" id="ssbutton" VALUE="Start/Stop" onClick="startstop()">
         <INPUT TYPE="BUTTON" id="reset" VALUE="Reset" onClick="swreset()">
-        <input type="button" id="save" value="Save" onClick="swSave()">
         <input type="button" id="create" value="Create New Athlete" onClick="createNewAthlete()">
         </FORM>
     </CENTER>
+	<div id="athleteContainer">
+	</div>
 </body>
 </html>
