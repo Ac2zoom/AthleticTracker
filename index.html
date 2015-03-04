@@ -1,20 +1,36 @@
 <html>
 <head>
     <title>Athletic Tracker</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="stopwatch.js"></script>
     <script src="Athlete.js"></script>
+	<link rel="stylesheet" href="index.css">
 </head>
 
-<body onLoad="display()">
+<body onLoad="display(); requestSport()">
     <CENTER>
         <FORM id="stpw">
-        Time:
-        <INPUT TYPE="text" id="time">
-        <INPUT TYPE="BUTTON" id="ssbutton" VALUE="Start/Stop" onClick="startstop()">
-        <INPUT TYPE="BUTTON" id="reset" VALUE="Reset" onClick="swreset()">
-        <input type="button" id="save" value="Save" onClick="swSave()">
-        <input type="button" id="create" value="Create New Athlete" onClick="createNewAthlete()">
+            <div class="jumbotron">
+                <div class="container">
+                    <h2 id="sport">Time</h2>
+                    <h1 id="time">0:0:0:0</h1>
+                </div>
+            </div>
+            <button type="button" class="btn btn-default btn-lg" id="ssbutton" onclick="startstop()">
+                <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-lg" id="reset" onclick="swreset()">
+                Reset
+            </button>
+            <button type="button" class="btn btn-default btn-lg" id="create" onclick="createNewAthlete()">
+                Create New Athlete
+            </button>
         </FORM>
     </CENTER>
+	<div id="athleteContainer">
+	</div>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

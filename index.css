@@ -1,0 +1,10 @@
+.athleteContainerContents {
+	display: block;
+    margin-left: auto;
+	margin-right: auto;
+}
+#save {
+	margin-left: auto;
+	margin-right: auto;
+	width: 30%;
+}

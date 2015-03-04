@@ -4,6 +4,7 @@ var then;
 var now;
 var store = 0;
 var athletes = [];
+var sport = "";
 function format(date) {
     "use strict";
     var hour = Math.floor(date / 3600000),
@@ -21,7 +22,7 @@ function startstop() {
         now = new Date();
         ms = store + now.getTime() - then.getTime();
         store = ms;
-        document.getElementById('time').value = format(ms);
+        $('#time').text(format(ms));
     }
 }
 function swreset() {
@@ -29,7 +30,7 @@ function swreset() {
     store = 0;
     state = 0;
     ms = 0;
-    document.getElementById('time').value = format(ms);
+    $('#time').text(format(ms));
 }
 function display() {
     "use strict";
@@ -37,16 +38,34 @@ function display() {
     if (state === 1) {
         now = new Date();
         ms = store + now.getTime() - then.getTime();
-        document.getElementById('time').value = format(ms);
+        $("#time").text(format(ms));
     }
 }
-function swSave() {
-    "use strict";
-    athletes[0].time = ms;
-    alert("Time saved to " + athletes[0].name);
+function nameSearch(name) {
+	for(var i = 0; i < athletes.length; i++) {
+		if(athletes[i].name === name) {
+			return i;
+		}
+	}
+}
+function save(athleteName, time) {
+    athletes[nameSearch(athleteName)][sport]=(time);
+    alert(athleteName + "'s time saved!");
 }
 function createNewAthlete() {
     "use strict";
     var name = prompt("What is the name of your new Athlete?", "Enter name here");
     athletes.push(new Athlete(name));
+	var button = $("<input type='button' class='btn btn-default btn-lg'>").attr("id", name);
+	$("#athleteContainer").append(button);
+	var id = "#" + name;
+	$(id).val(name);
+	$(id).attr("onClick", "save('" + name + "', store)");
+	$(id).attr("class", "athleteContainerContents");
+}
+
+function requestSport() {
+    "use strict";
+    sport = prompt("What sport are you recording a time for?", "Enter sport here");
+    $("#sport").text(sport);
 }
