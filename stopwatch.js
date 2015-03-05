@@ -1,3 +1,4 @@
+var http = require('http');
 var ms = 0;
 var state = 0;
 var then;
@@ -5,6 +6,10 @@ var now;
 var store = 0;
 var athletes = [];
 var sport = "";
+var headers = {
+    'Content-Type': 'application/json',
+    'Content-Length': 0
+};
 function format(date) {
     "use strict";
     var hour = Math.floor(date / 3600000),
@@ -50,6 +55,7 @@ function nameSearch(name) {
 }
 function save(athleteName, time) {
     athletes[nameSearch(athleteName)][sport]=(time);
+    JSON.stringify(athletes[nameSearch(athleteName)])
     alert(athleteName + "'s time saved!");
 }
 function createNewAthlete() {
