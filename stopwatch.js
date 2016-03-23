@@ -1,4 +1,4 @@
-var http = require('http');
+var egghead = angular.module("egghead", [])
 var ms = 0;
 var state = 0;
 var then;
@@ -6,10 +6,7 @@ var now;
 var store = 0;
 var athletes = [];
 var sport = "";
-var headers = {
-    'Content-Type': 'application/json',
-    'Content-Length': 0
-};
+
 function format(date) {
     "use strict";
     var hour = Math.floor(date / 3600000),
@@ -17,6 +14,7 @@ function format(date) {
         second = Math.floor(date / 1000) - minute * 60;
     return hour + ":" + minute + ":" + second + "." + date % 1000;
 }
+
 function startstop() {
     "use strict";
     if (state === 0) {
@@ -30,6 +28,7 @@ function startstop() {
         $('#time').text(format(ms));
     }
 }
+
 function swreset() {
     "use strict";
     store = 0;
@@ -37,6 +36,7 @@ function swreset() {
     ms = 0;
     $('#time').text(format(ms));
 }
+
 function display() {
     "use strict";
     setTimeout("display();", 50);
@@ -46,6 +46,7 @@ function display() {
         $("#time").text(format(ms));
     }
 }
+
 function nameSearch(name) {
 	for(var i = 0; i < athletes.length; i++) {
 		if(athletes[i].name === name) {
@@ -53,21 +54,37 @@ function nameSearch(name) {
 		}
 	}
 }
-function save(athleteName, time) {
-    athletes[nameSearch(athleteName)][sport]=(time);
-    JSON.stringify(athletes[nameSearch(athleteName)])
+
+function save(athleteName, time) { //edit once get requests allow persistence of athletes: just pass relevant sport
+    var athlete = nameSearch(athleteName);
+    athlete[sport]=new TimeDatum(time);
+    athlete.sport = sport;
+    var athleteNameString = JSON.stringify(athlete);
+    egghead.controller("AppCtrl", function ($http) {
+        var app = this;
+
+        $http.post("http://localhost:3000/", JSON.stringify(athleteNameString)).success(function () {
+            alert(athleteName + "'s time saved!");
+        });
+    });
+    /**req.write(athleteNameString);
+    req.end();**/
     alert(athleteName + "'s time saved!");
 }
+
 function createNewAthlete() {
     "use strict";
     var name = prompt("What is the name of your new Athlete?", "Enter name here");
+    if(typeof athletes !== 'object'){
+        athletes = [];
+    }
     athletes.push(new Athlete(name));
-	var button = $("<input type='button' class='btn btn-default btn-lg'>").attr("id", name);
+	var button = $("<input type='button'>").attr("id", name);
 	$("#athleteContainer").append(button);
 	var id = "#" + name;
 	$(id).val(name);
 	$(id).attr("onClick", "save('" + name + "', store)");
-	$(id).attr("class", "athleteContainerContents");
+	$(id).attr("class", "athleteContainerContents btn btn-default btn-lg");
 }
 
 function requestSport() {
